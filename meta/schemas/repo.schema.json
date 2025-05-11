@@ -1,0 +1,19 @@
+{
+    "type": "object",
+    "required": [
+        "name"
+    ],
+    "properties": {
+        "name": {
+            "type": "string"
+        },
+        "website": {
+            "type": "string",
+            "format": "uri"
+        },
+        "description": {
+            "type": "string"
+        }
+    },
+    "additionalProperties": true
+}

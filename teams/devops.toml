@@ -1,0 +1,11 @@
+name = "devops"
+members = [
+    "ap-1",
+    "Adrastopoulos",
+]
+repos = [
+    "akita",
+    "shepherd",
+    "mastiff",
+    "otterhound",
+]

@@ -1,0 +1,14 @@
+{
+    "[toml]": {
+        "editor.defaultFormatter": "tamasfe.even-better-toml"
+    },
+    "editor.formatOnSave": true,
+    "evenBetterToml.formatter.arrayAutoExpand": true,
+    "evenBetterToml.formatter.arrayTrailingComma": true,
+    "evenBetterToml.formatter.columnWidth": 0,
+    "evenBetterToml.schema.associations": {
+        "contributors/*.toml": "https://raw.githubusercontent.com/ScottyLabs/governance/refs/heads/main/meta/schemas/contributor.schema.json",
+        "repos/*.toml": "https://raw.githubusercontent.com/ScottyLabs/governance/refs/heads/main/meta/schemas/repo.schema.json",
+        "teams/*.toml": "https://raw.githubusercontent.com/ScottyLabs/governance/refs/heads/main/meta/schemas/team.schema.json"
+    }
+}

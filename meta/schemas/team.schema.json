@@ -1,0 +1,27 @@
+{
+    "type": "object",
+    "required": [
+        "name",
+        "members",
+        "repos"
+    ],
+    "properties": {
+        "name": {
+            "type": "string"
+        },
+        "members": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "minItems": 1
+        },
+        "repos": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    },
+    "additionalProperties": false
+}

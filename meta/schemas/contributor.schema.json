@@ -1,0 +1,16 @@
+{
+    "type": "object",
+    "required": [
+        "name",
+        "github"
+    ],
+    "properties": {
+        "name": {
+            "type": "string"
+        },
+        "github": {
+            "type": "string"
+        }
+    },
+    "additionalProperties": false
+}
