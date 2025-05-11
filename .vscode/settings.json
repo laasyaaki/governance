@@ -2,5 +2,14 @@
     "[toml]": {
         "editor.defaultFormatter": "tamasfe.even-better-toml"
     },
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "files.watcherExclude": {
+        "Cargo.lock": true,
+    },
+    "search.exclude": {
+        "Cargo.lock": true,
+    },
+    "files.readonlyInclude": {
+        "Cargo.lock": true,
+    },
 }

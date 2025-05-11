@@ -1,0 +1,5 @@
+#!/bin/sh
+set -e
+
+# Run the commit validator with the commit message file
+cargo run -q --package commit -- "$1"
