@@ -1,0 +1,15 @@
+name = "cmumaps"
+members = [
+    "ellylai",
+    "romycyy",
+    "shstevelee",
+    "kath45823",
+    "JeffreyYijiWang",
+    "Asher-W",
+    "luke992",
+    "Yuxiang-Huang",
+]
+repos = [
+    "cmumaps",
+    "cmumaps-data",
+]

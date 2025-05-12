@@ -1,0 +1,2 @@
+name = "cmumaps-data"
+description = "Go-between for graph visualization and cmumaps repos containing all of the json files cmumaps uses"
