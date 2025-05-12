@@ -8,6 +8,7 @@ on:
 
 jobs:
   validate-requirements:
+    name: Validate PR Requirements
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
