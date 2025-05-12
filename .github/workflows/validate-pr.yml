@@ -1,0 +1,47 @@
+name: Validate PR Requirements
+
+on:
+  pull_request:
+    paths:
+      - "contributors/**"
+      - "teams/**"
+
+jobs:
+  validate-requirements:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v46
+        with:
+          files: |
+            contributors/**
+            teams/**
+
+      - name: Make scripts executable
+        run: |
+          chmod +x .github/scripts/validate-contributor.sh
+          chmod +x .github/scripts/validate-team.sh
+
+      - name: Validate contributor self-nomination
+        if: contains(steps.changed-files.outputs.added_files, 'contributors/')
+        run: |
+          PR_AUTHOR="${{ github.event.pull_request.user.login }}"
+          for FILE in ${{ steps.changed-files.outputs.added_files }}; do
+            if [[ "$FILE" == contributors/* ]]; then
+              .github/scripts/validate-contributor.sh "$PR_AUTHOR" "$FILE"
+            fi
+          done
+
+      - name: Validate team creator is member
+        if: contains(steps.changed-files.outputs.added_files, 'teams/')
+        run: |
+          PR_AUTHOR="${{ github.event.pull_request.user.login }}"
+          for FILE in ${{ steps.changed-files.outputs.added_files }}; do
+            if [[ "$FILE" == teams/* ]]; then
+              .github/scripts/validate-team.sh "$PR_AUTHOR" "$FILE"
+            fi
+          done
