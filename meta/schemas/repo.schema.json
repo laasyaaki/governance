@@ -8,23 +8,25 @@
             "type": "string"
         },
         "website": {
-            "anyOf": [
-                {
-                    "type": "string",
-                    "format": "uri"
-                },
-                {
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "format": "uri"
-                    }
-                }
-            ]
+            "type": "string",
+            "format": "uri"
+        },
+        "websites": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "format": "uri"
+            }
         },
         "description": {
             "type": "string"
         }
+    },
+    "not": {
+        "required": [
+            "website",
+            "websites"
+        ]
     },
     "additionalProperties": true
 }
