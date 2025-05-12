@@ -8,7 +8,7 @@
             "type": "string"
         },
         "website": {
-            "oneOf": [
+            "anyOf": [
                 {
                     "type": "string",
                     "format": "uri"

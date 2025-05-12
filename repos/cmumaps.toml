@@ -1,3 +1,6 @@
 name = "cmumaps"
 description = "CMU Maps"
-website = "https://cmumaps.com/"
+website = [
+    "https://cmumaps.com/",
+    "https://floorplans.scottylabs.org/",
+]
