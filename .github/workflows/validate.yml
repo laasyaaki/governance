@@ -1,0 +1,102 @@
+name: Validate
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "contributors/**"
+      - "repos/**"
+      - "teams/**"
+      - "meta/validators/toml/**"
+      - ".taplo.toml"
+      - ".editorconfig"
+      - ".github/workflows/validate.yml"
+      - "Cargo.lock"
+      - "Cargo.toml"
+  pull_request:
+    paths:
+      - "contributors/**"
+      - "repos/**"
+      - "teams/**"
+      - "meta/validators/toml/**"
+      - ".taplo.toml"
+      - ".editorconfig"
+      - ".github/workflows/validate.yml"
+      - "Cargo.lock"
+      - "Cargo.toml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-editorconfig:
+    name: Check EditorConfig Compliance
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install EditorConfig Checker
+        uses: taiki-e/install-action@v2
+        with:
+          tool: editorconfig-checker
+          fallback: none
+
+      - name: Check EditorConfig Compliance
+        run: editorconfig-checker --exclude LICENSE
+
+  validate-toml:
+    name: Validate TOML Files
+    needs: validate-editorconfig
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Taplo
+        uses: taiki-e/install-action@v2
+        with:
+          tool: taplo
+          fallback: none
+
+      - name: Validate TOML Formatting
+        run: taplo fmt --check
+
+      - name: Validate TOML Against Schemas
+        run: taplo check
+
+  validate-rules:
+    name: Validate Governance Rules
+    needs: validate-toml
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - name: Cache Rust dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
+
+      - name: Run Governance Validator
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: --manifest-path meta/validators/governance/Cargo.toml --release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
