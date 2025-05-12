@@ -11,7 +11,7 @@ include = ["contributors/*.toml", "repos/*.toml", "teams/*.toml"]
 [rule.formatting]
 array_auto_expand = true
 array_trailing_comma = true
-column_width = 0
+column_width = 12
 
 [[rule]]
 include = ["contributors/*.toml"]
