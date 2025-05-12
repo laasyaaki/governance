@@ -4,27 +4,7 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "contributors/**"
-      - "repos/**"
-      - "teams/**"
-      - "meta/validators/governance/**"
-      - ".taplo.toml"
-      - ".editorconfig"
-      - ".github/workflows/validate.yml"
-      - "Cargo.lock"
-      - "Cargo.toml"
   pull_request:
-    paths:
-      - "contributors/**"
-      - "repos/**"
-      - "teams/**"
-      - "meta/validators/governance/**"
-      - ".taplo.toml"
-      - ".editorconfig"
-      - ".github/workflows/validate.yml"
-      - "Cargo.lock"
-      - "Cargo.toml"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
