@@ -11,7 +11,7 @@ use model::{
     ValidationWarning,
 };
 use reqwest::Client;
-use std::{collections::HashMap, fs};
+use std::collections::HashMap;
 
 fn insert_error(files: &mut HashMap<String, FileValidationMessages>, error: ValidationError) {
     files
@@ -148,8 +148,6 @@ async fn main() -> Result<()> {
             }
         }
     }
-
-    fs::write("report.json", serde_json::to_string_pretty(&report)?)?;
 
     if !report.valid {
         println!();
