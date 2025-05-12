@@ -8,8 +8,19 @@
             "type": "string"
         },
         "website": {
-            "type": "string",
-            "format": "uri"
+            "oneOf": [
+                {
+                    "type": "string",
+                    "format": "uri"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uri"
+                    }
+                }
+            ]
         },
         "description": {
             "type": "string"
