@@ -12,7 +12,8 @@ In this document, 'ScottyLabs' will refer to the GitHub organization at https://
 ├── meta
 │   ├── infra      # Terraform code for applying changes
 │   ├── schemas    # JSON schemas for validation
-│   └── validators # Rust-based validation tools
+│   ├── validators # Rust-based validation tools
+│   └── visualizer # Force graph for visualizing relationships
 ├── repos          # Team definitions with members and repos
 └── teams          # Repository definitions with metadata
 ```
@@ -51,10 +52,10 @@ Create a new TOML file in `teams/` with the team name as the filename, e.g. `cmu
 ```toml
 name = "cmucourses"
 members = [
-    "your-github-username"
+    "your-github-username" # >= 1 member (yourself)
 ]
 repos = [
-    "cmucourses"
+    "cmucourses" # >= 1 repo
 ]
 ```
 
