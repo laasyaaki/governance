@@ -31,17 +31,31 @@
             right: 20px;
             z-index: 10;
         }
+
+        #legend {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+        }
     </style>
 </head>
 
 <body>
     <div id="graph"></div>
+
     <div id="view-selector">
         <select id="relationship-filter">
             <option value="default" selected>Contributors & Teams</option>
             <option value="contributorsRepos">Contributors & Repos</option>
             <option value="teamsRepos">Teams & Repos</option>
         </select>
+    </div>
+
+    <div id="legend">
+        <span style="color:#4CAF50;">● Contributor</span><br />
+        <span style="color:#2196F3;">● Team</span><br />
+        <span style="color:#F44336;">● Repo</span>
     </div>
 
     <script>
@@ -58,6 +72,19 @@
         const graph = ForceGraph()
             (document.getElementById("graph"))
             .nodeColor(node => NODE_COLORS[node.nodeType])
+            .nodeLabel(node => {
+                // Don't use the scoped id for nodes
+                switch (node.nodeType) {
+                    case "Contributor":
+                        return node.fullName;
+                    case "Team":
+                        return node.name;
+                    case "Repo":
+                        return node.name;
+                    default:
+                        return node.id;
+                }
+            })
             .nodeVal(node => {
                 // Size node based on number of connections
                 const links = graph.graphData().links;
@@ -69,23 +96,25 @@
 
         // Prevent node overlap
         graph.d3Force("collide", d3.forceCollide().radius(n => graph.nodeVal()(n) + OFFSET));
-        graph.d3Force('link').strength(0.25);
+        graph.d3Force("link").strength(0.25);
         graph.d3VelocityDecay(0.2);
 
         // Add links
         graph.onNodeClick(node => {
-            const n = encodeURIComponent(node.id);
+            const username = encodeURIComponent(node.githubUsername);
+            const name = encodeURIComponent(node.name);
+
             let url = '';
 
             switch (node.nodeType) {
                 case "Contributor":
-                    url = `https://github.com/orgs/ScottyLabs/people/${n}`;
+                    url = `https://github.com/orgs/ScottyLabs/people/${username}`;
                     break;
                 case "Team":
-                    url = `https://github.com/orgs/ScottyLabs/teams/${n}`;
+                    url = `https://github.com/orgs/ScottyLabs/teams/${name}`;
                     break;
                 case "Repo":
-                    url = `https://github.com/ScottyLabs/${n}`;
+                    url = `https://github.com/ScottyLabs/${name}`;
                     break;
             }
 
@@ -99,6 +128,7 @@
         // Initial render + select listener
         function updateGraph(datasetKey) {
             graph.graphData(datasets[datasetKey]);
+            graph.d3ReheatSimulation();
         }
 
         updateGraph("default");
